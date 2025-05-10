@@ -7,6 +7,43 @@
   <h2>Inserisci un link YouTube:</h2>
   <form id="youtubeForm">
     <input type="url" id="youtubeLink" placeholder="https://www.youtube.com/..." required pattern="https:\/\/(www\.)?youtube\.com\/watch\?v=.*" size="50">
+    
+    <!-- Campo nascosto con il prompt generico -->
+    <textarea id="promptText" style="display:none;">
+You are a meticulous YouTube video analyst and AI-native storytelling expert.
+
+Given the video at this link, analyze it with the following goals:
+
+1. **Content Breakdown**:
+   - Summarize the main sections or themes of the video.
+   - Highlight what happens in each part (chronological or logical order).
+   - Identify any tools, platforms, or strategies shown.
+
+2. **What You Learn About the Creator**:
+   - Describe who is speaking, what they're working on, and what their current challenges or goals are.
+   - Mention any context from previous efforts or days (if this is part of a series).
+   - Extract their mindset, attitude, and work approach.
+
+3. **Storytelling & Strategic Techniques**:
+   - Point out storytelling structures used (e.g. hooks, loops, vulnerability, data).
+   - Identify any community engagement efforts, challenges proposed, or high-conviction messages.
+   - Analyze how the creator uses transparency, feedback, or personal branding.
+
+4. **Progress from Previous Videos** (if applicable):
+   - Mention how today’s video builds on prior content or shifts direction.
+   - Identify actions taken, ideas validated, or systems implemented.
+
+5. **Data Tracking & Metrics** (if visible):
+   - Capture any progress updates: followers, revenue, tasks completed, obstacles faced.
+   - Record anything measurable or useful for day-by-day tracking.
+
+6. **TL;DR Summary**:
+   - Provide a concise but rich 3-5 sentence summary of what this video contributes to the overall journey.
+
+This information will be used to build a structured memory system and allow future retrieval across channels and creators.
+    </textarea>
+
+    <br><br>
     <button type="submit">Analizza</button>
   </form>
 
@@ -14,13 +51,14 @@
     document.getElementById("youtubeForm").addEventListener("submit", function (e) {
       e.preventDefault();
       const link = document.getElementById("youtubeLink").value;
-      
+      const prompt = document.getElementById("promptText").value;
+
       fetch("https://n8n-4ghq.onrender.com/webhook/youtube-analysis", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify({ link })
+        body: JSON.stringify({ videoUrl: link, prompt: prompt })
       })
       .then(response => {
         if (response.ok) {
@@ -31,5 +69,8 @@
       });
     });
   </script>
+</body>
+</html>
+
 </body>
 </html>
