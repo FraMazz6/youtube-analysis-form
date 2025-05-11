@@ -4,11 +4,20 @@
   <title>Analisi Video YouTube</title>
 </head>
 <body>
-  <h2>Inserisci un link YouTube:</h2>
+  <h2>Inserisci un link YouTube e invia per analizzarlo:</h2>
   <form id="youtubeForm">
-    <input type="url" id="youtubeLink" placeholder="https://www.youtube.com/..." required pattern="https:\/\/(www\.)?youtube\.com\/watch\?v=.*" size="50">
-    
-    <!-- Campo nascosto con il prompt generico -->
+    <!-- Campo input URL -->
+    <input 
+      type="url" 
+      id="youtubeLink" 
+      name="youtubeLink"
+      placeholder="https://www.youtube.com/..." 
+      required 
+      pattern="https:\/\/(www\.)?youtube\.com\/watch\?v=.*" 
+      size="50"
+    >
+
+    <!-- Campo prompt nascosto -->
     <textarea id="promptText" style="display:none;">
 You are a meticulous YouTube video analyst and AI-native storytelling expert.
 
@@ -48,35 +57,33 @@ This information will be used to build a structured memory system and allow futu
   </form>
 
   <script>
-  document.getElementById("youtubeForm").addEventListener("submit", function (e) {
-    e.preventDefault();
-    const link = document.getElementById("youtubeLink").value.trim();
-    const prompt = document.getElementById("promptText").value.trim();
+    document.getElementById("youtubeForm").addEventListener("submit", function (e) {
+      e.preventDefault();
 
-    const payload = {
-      videoUrl: link,
-      prompt: prompt
-    };
+      const videoUrl = document.getElementById("youtubeLink").value.trim();
+      const prompt = document.getElementById("promptText").value.trim();
 
-    fetch("https://n8n-4ghq.onrender.com/webhook/youtube-analysis", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(payload)
-    })
-    .then(response => {
-      if (response.ok) {
-        alert("Link inviato con successo!");
-      } else {
-        alert("Errore durante l'invio.");
-      }
+      const payload = {
+        videoUrl: videoUrl,
+        prompt: prompt
+      };
+
+      fetch("https://n8n-4ghq.onrender.com/webhook/youtube-analysis", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+      })
+      .then(response => {
+        if (response.ok) {
+          alert("Link inviato con successo!");
+        } else {
+          alert("Errore durante l'invio.");
+        }
+      });
     });
-  });
-</script>
-
+  </script>
 </body>
 </html>
 
-</body>
-</html>
