@@ -61,12 +61,12 @@ This information will be used to build a structured memory system and allow futu
       e.preventDefault();
 
       const videoUrl = document.getElementById("youtubeLink").value.trim();
-      const prompt = document.getElementById("promptText").value.trim();
+const prompt = document.getElementById("promptText").value.trim();
 
-      const payload = {
-        videoUrl: videoUrl,
-        prompt: prompt
-      };
+const payload = {
+  videoUrl, // <-- chiave corretta
+  prompt
+};
 
       fetch("https://n8n-4ghq.onrender.com/webhook/youtube-analysis", {
         method: "POST",
