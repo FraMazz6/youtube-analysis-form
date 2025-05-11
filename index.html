@@ -48,27 +48,33 @@ This information will be used to build a structured memory system and allow futu
   </form>
 
   <script>
-    document.getElementById("youtubeForm").addEventListener("submit", function (e) {
-      e.preventDefault();
-      const link = document.getElementById("youtubeLink").value;
-      const prompt = document.getElementById("promptText").value;
+  document.getElementById("youtubeForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+    const link = document.getElementById("youtubeLink").value.trim();
+    const prompt = document.getElementById("promptText").value.trim();
 
-      fetch("https://n8n-4ghq.onrender.com/webhook/youtube-analysis", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ videoUrl: link, prompt: prompt })
-      })
-      .then(response => {
-        if (response.ok) {
-          alert("Link inviato con successo!");
-        } else {
-          alert("Errore durante l'invio.");
-        }
-      });
+    const payload = {
+      videoUrl: link,
+      prompt: prompt
+    };
+
+    fetch("https://n8n-4ghq.onrender.com/webhook/youtube-analysis", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(payload)
+    })
+    .then(response => {
+      if (response.ok) {
+        alert("Link inviato con successo!");
+      } else {
+        alert("Errore durante l'invio.");
+      }
     });
-  </script>
+  });
+</script>
+
 </body>
 </html>
 
